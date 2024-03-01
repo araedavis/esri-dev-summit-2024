@@ -1,0 +1,28 @@
+@import 'https://js.arcgis.com/4.29/@arcgis/core/assets/esri/themes/light/main.css';
+
+/* a minimalist set of CSS resets */
+
+/* default to border-box */
+html,
+body,
+#viewDiv {
+  box-sizing: border-box;
+
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* images and videos max out at full width */
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
