@@ -3,21 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <title>Calcite Components - Vite</title>
+    <link rel="stylesheet" href="./src/style.css">
   </head>
 
-  <script type="module" src="/main.js"></script>
+  
   <body>
     <calcite-shell>
       <calcite-shell-panel slot="panel-start">
-        <calcite-panel heading="Devsummit yo"></calcite-panel>
+        <calcite-panel heading="Devsummit yo">
+          
+        </calcite-panel>
+        <!-- <calcite-date-picker range></calcite-date-picker>
+        <calcite-button>My button</calcite-button> -->
       </calcite-shell-panel>
+      
       <div id="viewDiv"></div>
     </calcite-shell>
-    <!-- <calcite-date-picker range></calcite-date-picker>
-    <calcite-button>My button</calcite-button> -->
+
+    
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>

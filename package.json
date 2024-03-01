@@ -9,8 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^5.1.4",
-    "vite-plugin-static-copy": "^1.0.1"
+    "vite": "^5.1.4"
   },
   "dependencies": {
     "@arcgis/core": "^4.29.2",
