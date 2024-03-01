@@ -12,6 +12,7 @@ import { defineCustomElements } from "@esri/calcite-components/dist/loader";
 import esriConfig from "@arcgis/core/config.js";
 import Map from "@arcgis/core/Map.js";
 import MapView from "@arcgis/core/views/MapView.js";
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js"
 
 
 // load calcite components
@@ -31,3 +32,19 @@ const view = new MapView({
   center: [-122.676483, 45.523],
   zoom: 12,
 });
+
+const csaRenderer = {
+  type: "simple",
+  symbol: {
+    type: "web-style",
+    name: "tear-pin-2",
+    styleName: "Esri2DPointSymbolsStyle",
+  },
+};
+
+const csaPickups = new FeatureLayer({
+  url: "https://www.portlandmaps.com/od/rest/services/COP_OpenData_ImportantPlaces/MapServer/188",
+  renderer: csaRenderer
+});
+
+map.add(csaPickups);
