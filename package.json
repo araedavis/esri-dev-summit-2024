@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@arcgis/core": "^4.29.2",
-    "@esri/calcite-components": "^2.6.0",
-    "dotenv": "^16.4.5"
+    "@esri/calcite-components": "^2.6.0"
   }
 }

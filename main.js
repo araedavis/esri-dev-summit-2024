@@ -28,10 +28,10 @@ setAssetPath(location.href);
 // const loader = document.createElement('calcite-loader');
 // document.body.appendChild(loader);
 
-// esriConfig.apiKey = process.env.API_KEY;
+esriConfig.apiKey = import.meta.env.VITE_ARCGIS_API_KEY;
 
 const map = new Map({
-  basemap: 'streets-navigation-vector',
+  basemap: 'arcgis/community',
 });
 
 const view = new MapView({
