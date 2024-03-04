@@ -11,11 +11,28 @@
   <body>
     <calcite-shell>
       <calcite-shell-panel slot="panel-start">
-        <calcite-panel heading="Devsummit yo">
-          
+        <calcite-panel heading="Portland Metro CSA pick-up sites">
+        <!-- @TODO a calcite-tooltip with the definition of a CSA could be a nice touch -->
+        <calcite-block heading="Find a site near me" open>
+          <calcite-input id="address" form="" label="home-address" icon="search" placeholder="Enter your address"></calcite-input>
+          <calcite-label>
+            <calcite-slider id="distance" form="" min="0" max="10" value="5" label-handles label-ticks max-label="10" min-label="0 miles" ticks="5" step="0.5"></calcite-slider>
+            miles away
+          </calcite-label>
+        </calcite-block>
+
+        <calcite-block heading="Filter by products" open>
+          <calcite-combobox placeholder="Select a product">
+            <calcite-combobox-item value="vegetables" text-label="Vegetables" icon="banana"></calcite-combobox-item>
+            <calcite-combobox-item value="flowers" text-label="Flowers" icon="banana"></calcite-combobox-item>
+            <calcite-combobox-item value="berries" text-label="Berries" icon="banana"></calcite-combobox-item>
+            <calcite-combobox-item value="meat" text-label="Meat" icon="banana"></calcite-combobox-item>
+            <calcite-combobox-item value="fish" text-label="Fish" icon="banana"></calcite-combobox-item>
+            <calcite-combobox-item value="eggs" text-label="Eggs" icon="banana"></calcite-combobox-item>
+            <calcite-combobox-item value="plant-starts" text-label="Plant starts" icon="banana"></calcite-combobox-item>
+          </calcite-combobox>
+        </calcite-block>
         </calcite-panel>
-        <!-- <calcite-date-picker range></calcite-date-picker>
-        <calcite-button>My button</calcite-button> -->
       </calcite-shell-panel>
       
       <div id="viewDiv"></div>

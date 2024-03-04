@@ -26,3 +26,7 @@ video {
   height: auto;
   max-width: 100%;
 }
+
+#search-container {
+  padding: 0px 10px;
+}

@@ -9,10 +9,14 @@ import { defineCustomElements } from "@esri/calcite-components/dist/loader";
 /**
  * ES Modules from the JS Maps SDK
  */
-import esriConfig from "@arcgis/core/config.js";
-import Map from "@arcgis/core/Map.js";
-import MapView from "@arcgis/core/views/MapView.js";
-import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js"
+import esriConfig from "@arcgis/core/config";
+import Map from "@arcgis/core/Map";
+import MapView from "@arcgis/core/views/MapView";
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import { addressToLocations } from "@arcgis/core/rest/locator";
+import Graphic from "@arcgis/core/Graphic";
+import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
+import * as geometryEngine from "@arcgis/core/geometry/geometryEngine";
 
 
 // load calcite components
@@ -42,9 +46,94 @@ const csaRenderer = {
   },
 };
 
-const csaPickups = new FeatureLayer({
+const csaPickupsLayer = new FeatureLayer({
   url: "https://www.portlandmaps.com/od/rest/services/COP_OpenData_ImportantPlaces/MapServer/188",
   renderer: csaRenderer
 });
 
-map.add(csaPickups);
+map.add(csaPickupsLayer);
+const csaPickupsLayerView = await view.whenLayerView(csaPickupsLayer);
+
+
+let pointGraphic;
+const graphicsLayer = new GraphicsLayer();
+map.add(graphicsLayer);
+
+const slider = document.getElementById("distance");
+
+
+// calcite-input custom event; fires on submit/enter key press
+document.addEventListener("calciteInputChange", async (event) => {
+  const address = { singleLine: event.target.value };
+  const serviceUrl =
+    "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
+
+  const locations = await addressToLocations(serviceUrl, { address })
+
+  if (locations.length === 0) {
+    return;
+  }
+
+  // Clear any previous point from the map
+  graphicsLayer.removeAll();
+
+  // Create a point geometry and graphic from the best location match
+  const { x, y } = locations[0].toJSON().location;
+  pointGraphic = new Graphic({
+    geometry: { type: "point", x, y },
+    symbol: {
+      type: "web-style",
+      name: "house",
+      styleName: "Esri2DPointSymbolsStyle"
+    }
+  });
+  graphicsLayer.add(pointGraphic);
+  view.goTo(pointGraphic);
+
+  const buffer = createBuffer(pointGraphic);
+  filterByLocation(buffer);
+});
+
+document.addEventListener("calciteSliderChange", () => {
+  if (!pointGraphic) {
+    return;
+  }
+  const buffer = createBuffer(pointGraphic);
+  filterByLocation(buffer);
+});
+
+document.addEventListener("calciteComboboxChange", e => {
+  // filterByProduct(e);
+})
+
+
+function createBuffer (point) {
+  const distance = slider.value;
+
+  return geometryEngine.geodesicBuffer(
+    point.geometry,
+    distance,
+    "miles"
+  )
+}
+
+function filterByLocation (geometry) {
+  const featureFilter = {
+    geometry,
+    spatialRelationship: "intersects",
+    units: "miles"
+  };
+  if (csaPickupsLayerView) {
+    csaPickupsLayerView.featureEffect = {
+      filter: featureFilter,
+      excludedEffect: "grayscale(100%) opacity(30%)"
+    }
+  }  
+}
+
+// function filterByProduct(event) {
+//   console.log(event.target.value);
+//   csaPickupsLayer.filter = {
+//     where: ""
+//   }
+// }
