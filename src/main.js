@@ -6,6 +6,7 @@
 import "@esri/calcite-components/dist/calcite/calcite.css";
 import { defineCustomElements } from "@esri/calcite-components/dist/loader";
 
+
 /**
  * ES Modules from the JS Maps SDK
  */
@@ -17,8 +18,10 @@ import { addressToLocations } from "@arcgis/core/rest/locator";
 import Graphic from "@arcgis/core/Graphic";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import * as geometryEngine from "@arcgis/core/geometry/geometryEngine";
+import * as agricultureCIMSymbol from "./agriculture-cim-symbol.json";
+import * as plantCIMSymbol from "./plant-cim-symbol.json";
 
-
+  
 // load calcite components
 defineCustomElements(window, {
   resourcesUrl: "https://js.arcgis.com/calcite-components/2.6.0/assets",
@@ -40,9 +43,11 @@ const view = new MapView({
 const csaRenderer = {
   type: "simple",
   symbol: {
-    type: "web-style",
-    name: "tear-pin-2",
-    styleName: "Esri2DPointSymbolsStyle",
+    type: "cim",
+    data: {
+      type: "CIMSymbolReference",
+      symbol: plantCIMSymbol
+    },
   },
 };
 
@@ -53,7 +58,6 @@ const csaPickupsLayer = new FeatureLayer({
 
 map.add(csaPickupsLayer);
 const csaPickupsLayerView = await view.whenLayerView(csaPickupsLayer);
-
 
 let pointGraphic;
 const graphicsLayer = new GraphicsLayer();

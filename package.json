@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@arcgis/core": "^4.29.2",
-    "@esri/calcite-components": "^2.6.0"
+    "@esri/calcite-components": "^2.6.0",
+    "calcite-point-symbols": "github:arcgis/calcite-point-symbols"
   }
 }
