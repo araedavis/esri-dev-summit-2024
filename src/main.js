@@ -38,6 +38,20 @@ const view = new MapView({
   map,
   center: [-122.676483, 45.523],
   zoom: 12,
+  highlightOptions: {
+    color: "#36DA43",
+    haloOpacity: 0.75,
+  },
+  popup: {
+    dockOptions: {
+      buttonEnabled: false
+    },
+    visibleElements: {
+      actionBar: false,
+      collapseButton: false,
+      featureNavigation: false
+    },
+  },
 });
 
 const csaRenderer = {
@@ -51,9 +65,17 @@ const csaRenderer = {
   },
 };
 
+const csaPopup = {
+  title: "{Farm_Name}",
+  content:
+    "<b>Pickup address: </b>{Location}<br/><br/><a href={Website}>View website</a>",
+  
+};
+
 const csaPickupsLayer = new FeatureLayer({
   url: "https://www.portlandmaps.com/od/rest/services/COP_OpenData_ImportantPlaces/MapServer/188",
-  renderer: csaRenderer
+  renderer: csaRenderer,
+  popupTemplate: csaPopup
 });
 
 map.add(csaPickupsLayer);
@@ -64,7 +86,6 @@ const graphicsLayer = new GraphicsLayer();
 map.add(graphicsLayer);
 
 const slider = document.getElementById("distance");
-
 
 // calcite-input custom event; fires on submit/enter key press
 document.addEventListener("calciteInputChange", async (event) => {
