@@ -13,20 +13,28 @@ defineCustomElements(window, {
   resourcesUrl: "https://js.arcgis.com/calcite-components/2.6.0/assets",
 });
 
-/**
- * List-view page
- */
+const EMOJI = {
+  vegetables: "&#129365;",
+  fruit: "&#127817;",
+  berries: "&#127827;",
+  mushrooms: "&#127812;",
+  eggs: "&#129370;",
+  dairy: "&#129371;",
+  meat: "&#129385;",
+  fish: "&#128031;",
+  honey: "&#127855;",
+  herbs: "&#127807;",
+  flowers: "&#127803;",
+  plant_starts: "&#127793;",
+};
 
 const container = document.querySelector(".card-container");
-
-// const chip = `<calcite-chip id="chip-1" value="calcite-chip" scale="s">&#129365;</calcite-chip>`;
-// const chipElement = document.createRange().createContextualFragment(chip);
-// card.appendChild(chipElement); 
 
 const featureServiceUrl =
   "https://www.portlandmaps.com/od/rest/services/COP_OpenData_ImportantPlaces/MapServer/188";
 
 queryFeatures({ url: featureServiceUrl, where: "Status = 'Active'"}).then(layer => {
+  console.log(layer);
   return normalizeData(layer);
 }).then(sites => {
   filterResults(sites)
@@ -39,6 +47,9 @@ function normalizeData(data) {
       description: feature.attributes["FarmDescript"],
       address: feature.attributes["Location"],
       products: feature.attributes["Main_Products"].toLowerCase().split(", "),
+      website: feature.attributes["Website"],
+      email: feature.attributes["email"]
+
     };
   })
 }
@@ -48,13 +59,17 @@ function filterResults(features) {
     container.replaceChildren("");
     const filters = Array.isArray(e.target.value) ? e.target.value : [e.target.value];
     features.forEach(feature => {
-      const isMatch = feature.products.filter(product => filters.includes(product)).length === filters.length;
+      const isMatch = feature.products.filter(product => filters.includes(product.replace(" ", "_"))).length === filters.length;
       if (isMatch) {
         const card = `<calcite-card>
           <span slot="heading">${feature.farm}</span>
           <span slot="description">${feature.address}</span>
           <p>${feature.description}</p>
           ${feature.products}
+          <calcite-button icon-end="launch" href=${feature.website} target="_blank">Visit website</calcite-button>
+          <calcite-button icon-end="envelope" href="mailto:${feature.email}">Contact us</calcite-button>
+          <div slot="footer-start"></div>
+          <div slot="footer-end">${getChips(feature.products)}</div>
         </calcite-card>`;
         const cardElement = document.createRange().createContextualFragment(card);
         container.appendChild(cardElement);
@@ -62,4 +77,13 @@ function filterResults(features) {
       }
     })
   })
+
+  function getChips(products) {
+    const chips = products.map(product => {
+      const productId = product.replace(" ", "_")
+      const content = EMOJI[productId];
+      return content ? `<calcite-chip scale="s">${content}</calcite-chip>` : "";
+    })
+    return chips.join("");
+  }
 }
