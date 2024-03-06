@@ -4,31 +4,45 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portland CSA Pickup Sites</title>
-    <link rel="stylesheet" href="./src/style.css">
+    <link rel="stylesheet" href="src/main.css" />
   </head>
 
-  
   <body>
     <calcite-shell>
       <calcite-shell-panel slot="panel-start">
         <calcite-panel heading="Portland Metro CSA pick-up sites">
-        <!-- @TODO a calcite-tooltip with the definition of a CSA could be a nice touch -->
-        <calcite-block heading="Find a site near me" open>
-          <calcite-input id="address" form="" label="home-address" icon="search" placeholder="Enter your address"></calcite-input>
-          <calcite-label>
-            <calcite-slider id="distance" form="" min="0" max="10" value="5" label-handles label-ticks max-label="10" min-label="0 miles" ticks="5" step="0.5"></calcite-slider>
-            miles away
-          </calcite-label>
-        </calcite-block>
-
-
+          <!-- @TODO a calcite-tooltip with the definition of a CSA could be a nice touch -->
+          <calcite-block heading="Find a site near me" open>
+            <calcite-input
+              id="address"
+              form=""
+              label="home-address"
+              icon="search"
+              placeholder="Enter your address"
+            ></calcite-input>
+            <calcite-label>
+              <calcite-slider
+                id="distance"
+                form=""
+                min="0"
+                max="10"
+                value="5"
+                label-handles
+                label-ticks
+                max-label="10"
+                min-label="0 miles"
+                ticks="5"
+                step="0.5"
+              ></calcite-slider>
+              miles away
+            </calcite-label>
+          </calcite-block>
         </calcite-panel>
       </calcite-shell-panel>
-      
+
       <div id="viewDiv"></div>
     </calcite-shell>
 
-    
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>

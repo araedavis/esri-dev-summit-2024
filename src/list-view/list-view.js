@@ -33,57 +33,68 @@ const container = document.querySelector(".card-container");
 const featureServiceUrl =
   "https://www.portlandmaps.com/od/rest/services/COP_OpenData_ImportantPlaces/MapServer/188";
 
-queryFeatures({ url: featureServiceUrl, where: "Status = 'Active'"}).then(layer => {
-  console.log(layer);
-  return normalizeData(layer);
-}).then(sites => {
-  filterResults(sites)
-});
+queryFeatures({ url: featureServiceUrl, where: "Status = 'Active'" })
+  .then((layer) => {
+    console.log(layer);
+    return normalizeData(layer);
+  })
+  .then((sites) => {
+    filterResults(sites);
+  });
 
 function normalizeData(data) {
-  return data.features.map(feature => {
+  return data.features.map((feature) => {
     return {
       farm: feature.attributes["Farm_Name"],
       description: feature.attributes["FarmDescript"],
       address: feature.attributes["Location"],
       products: feature.attributes["Main_Products"].toLowerCase().split(", "),
       website: feature.attributes["Website"],
-      email: feature.attributes["email"]
-
+      email: feature.attributes["email"],
     };
-  })
+  });
 }
 
 function filterResults(features) {
-  document.addEventListener("calciteComboboxChange", (e) => {
+  document.addEventListener("calciteChipGroupSelect", (e) => {
     container.replaceChildren("");
-    const filters = Array.isArray(e.target.value) ? e.target.value : [e.target.value];
-    features.forEach(feature => {
-      const isMatch = feature.products.filter(product => filters.includes(product.replace(" ", "_"))).length === filters.length;
+    const filters = e.target.selectedItems.map((selected) => selected.value);
+
+    console.log("filters: ", filters);
+
+    features.forEach((feature) => {
+      const isMatch =
+        feature.products.filter((product) =>
+          filters.includes(product.replace(" ", "_"))
+        ).length === filters.length;
       if (isMatch) {
         const card = `<calcite-card>
           <span slot="heading">${feature.farm}</span>
           <span slot="description">${feature.address}</span>
           <p>${feature.description}</p>
-          ${feature.products}
-          <calcite-button icon-end="launch" href=${feature.website} target="_blank">Visit website</calcite-button>
-          <calcite-button icon-end="envelope" href="mailto:${feature.email}">Contact us</calcite-button>
+          <calcite-button icon-end="launch" href=${
+            feature.website
+          } target="_blank">Visit website</calcite-button>
+          <calcite-button icon-end="envelope" href="mailto:${
+            feature.email
+          }">Contact us</calcite-button>
           <div slot="footer-start"></div>
           <div slot="footer-end">${getChips(feature.products)}</div>
         </calcite-card>`;
-        const cardElement = document.createRange().createContextualFragment(card);
+        const cardElement = document
+          .createRange()
+          .createContextualFragment(card);
         container.appendChild(cardElement);
-
       }
-    })
-  })
+    });
+  });
 
   function getChips(products) {
-    const chips = products.map(product => {
-      const productId = product.replace(" ", "_")
+    const chips = products.map((product) => {
+      const productId = product.replace(" ", "_");
       const content = EMOJI[productId];
       return content ? `<calcite-chip scale="s">${content}</calcite-chip>` : "";
-    })
+    });
     return chips.join("");
   }
 }
