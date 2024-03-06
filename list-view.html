@@ -4,25 +4,47 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portland Metro CSA pick-up sites</title>
-    <link rel="stylesheet" href="./src/style.css">
+    <link rel="stylesheet" href="./src/list-view.css">
   </head>
 
   
   <body>
-    <h1>It's a list!</h1>
+    <h1>Portland Metro CSA pick-up sites</h1>
 
-    <calcite-combobox placeholder="Select a product">
-      <calcite-combobox-item value="vegetables" text-label="Vegetables" icon="banana"></calcite-combobox-item>
-      <calcite-combobox-item value="flowers" text-label="Flowers" icon="banana"></calcite-combobox-item>
-      <calcite-combobox-item value="berries" text-label="Berries" icon="banana"></calcite-combobox-item>
-      <calcite-combobox-item value="meat" text-label="Meat" icon="banana"></calcite-combobox-item>
-      <calcite-combobox-item value="fish" text-label="Fish" icon="banana"></calcite-combobox-item>
-      <calcite-combobox-item value="eggs" text-label="Eggs" icon="banana"></calcite-combobox-item>
-      <calcite-combobox-item value="plant-starts" text-label="Plant starts" icon="banana"></calcite-combobox-item>
+    <div class="filter-container">
+      <calcite-combobox placeholder="Select a product">
+      <calcite-combobox-item value="vegetables" text-label="&#129365; vegetables"></calcite-combobox-item>
+      <calcite-combobox-item value="fruit" text-label="&#127817; fruit"></calcite-combobox-item>
+      <calcite-combobox-item value="berries" text-label="&#127827; berries"></calcite-combobox-item>
+      <calcite-combobox-item value="mushrooms" text-label="&#127812; mushrooms"></calcite-combobox-item>
+      <calcite-combobox-item value="eggs" text-label="&#129370; eggs"></calcite-combobox-item>
+      <calcite-combobox-item value="dairy" text-label="&#129371; dairy"></calcite-combobox-item>
+      <calcite-combobox-item value="meat" text-label="&#129385; meat"></calcite-combobox-item>
+      <calcite-combobox-item value="fish" text-label="&#128031; fish"></calcite-combobox-item>
+      <calcite-combobox-item value="honey" text-label="&#127855; honey"></calcite-combobox-item>
+      <calcite-combobox-item value="herbs" text-label="&#127807;herbs"></calcite-combobox-item>
+      <calcite-combobox-item value="flowers" text-label="&#127803; flowers"></calcite-combobox-item>
+      <calcite-combobox-item value="plant starts" text-label="&#127793; plant starts"></calcite-combobox-item>
     </calcite-combobox>
+    </div>
+    
+    <div class="card-container">
+      <!-- <calcite-card>
+        <span slot="heading">Farm</span>
+        <span slot="description">Address</span>
+        <p>Description</p>
+        <calcite-button icon-end="launch" target="_blank" href="#">Visit website</calcite-button>
+        <div slot="footer-start">
+          <calcite-chip value="calcite-chip">Accepts SNAP</calcite-chip>
+        </div>
+        <div id="test-card-chips" slot="footer-end">
+          <calcite-chip id="chip-2" value="calcite-chip" icon="check-circle" scale="s"></calcite-chip>
+        </div>
+      </calcite-card>
+      <calcite-tooltip reference-element="chip-1">Veggies</calcite-tooltip>
+      <calcite-tooltip reference-element="chip-2">Eggs</calcite-tooltip> -->
+    </div>
 
-    
-    
-    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/list-view/list-view.js"></script>
   </body>
 </html>

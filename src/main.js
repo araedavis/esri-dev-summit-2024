@@ -127,10 +127,6 @@ document.addEventListener("calciteSliderChange", () => {
   filterByLocation(buffer);
 });
 
-document.addEventListener("calciteComboboxChange", e => {
-  // filterByProduct(e);
-})
-
 
 function createBuffer (point) {
   const distance = slider.value;
@@ -155,10 +151,3 @@ function filterByLocation (geometry) {
     }
   }  
 }
-
-// function filterByProduct(event) {
-//   console.log(event.target.value);
-//   csaPickupsLayer.filter = {
-//     where: ""
-//   }
-// }
