@@ -22,13 +22,16 @@ import * as agricultureCIMSymbol from "./agriculture-cim-symbol.json";
 import * as plantCIMSymbol from "./plant-cim-symbol.json";
 
   
-// load calcite components
+// Load calcite components
 defineCustomElements(window, {
   resourcesUrl: "https://js.arcgis.com/calcite-components/2.6.0/assets",
 });
 
+// Add api key to access basemaps service
 esriConfig.apiKey = import.meta.env.VITE_ARCGIS_API_KEY;
 
+let pointGraphic;
+let csaPickupsLayerView;
 const map = new Map({
   basemap: "arcgis/community",
 });
@@ -72,20 +75,23 @@ const csaPopup = {
   
 };
 
+const graphicsLayer = new GraphicsLayer();
+
 const csaPickupsLayer = new FeatureLayer({
   url: "https://www.portlandmaps.com/od/rest/services/COP_OpenData_ImportantPlaces/MapServer/188",
   renderer: csaRenderer,
   popupTemplate: csaPopup
 });
 
-map.add(csaPickupsLayer);
-const csaPickupsLayerView = await view.whenLayerView(csaPickupsLayer);
-
-let pointGraphic;
-const graphicsLayer = new GraphicsLayer();
 map.add(graphicsLayer);
+map.add(csaPickupsLayer);
 
-const slider = document.getElementById("distance");
+try {
+  csaPickupsLayerView = await view.whenLayerView(csaPickupsLayer);
+} catch (error) {
+  console.log(error);
+}
+
 
 // calcite-input custom event; fires on submit/enter key press
 document.addEventListener("calciteInputChange", async (event) => {
@@ -93,32 +99,27 @@ document.addEventListener("calciteInputChange", async (event) => {
   const serviceUrl =
     "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
 
-  const locations = await addressToLocations(serviceUrl, { address })
-
-  if (locations.length === 0) {
-    return;
-  }
-
-  // Clear any previous point from the map
-  graphicsLayer.removeAll();
-
-  // Create a point geometry and graphic from the best location match
-  const { x, y } = locations[0].toJSON().location;
-  pointGraphic = new Graphic({
-    geometry: { type: "point", x, y },
-    symbol: {
-      type: "web-style",
-      name: "house",
-      styleName: "Esri2DPointSymbolsStyle"
+  try {
+    // use the Maps SDK's locator helper to call the REST API's geocoding service
+    const locations = await addressToLocations(serviceUrl, { address });
+    if (locations.length === 0) {
+      return;
     }
-  });
-  graphicsLayer.add(pointGraphic);
-  view.goTo(pointGraphic);
 
-  const buffer = createBuffer(pointGraphic);
-  filterByLocation(buffer);
+    // Get the location from the top match
+    const addressLocation = locations[0].toJSON().location;
+
+    // Convert location's geometry to a point graphic and add to map
+    addHomeGraphic(addressLocation)
+
+    const buffer = createBuffer(pointGraphic);
+    filterByLocation(buffer);
+  } catch (error) {
+    console.log(error)
+  }
 });
 
+// calcite-slider custom event; fires only when slider's handle is released
 document.addEventListener("calciteSliderChange", () => {
   if (!pointGraphic) {
     return;
@@ -127,9 +128,27 @@ document.addEventListener("calciteSliderChange", () => {
   filterByLocation(buffer);
 });
 
+function addHomeGraphic (location) {
+  // Clear any previous point from the map
+  graphicsLayer.removeAll();
+
+  const { x, y } = location;
+
+  pointGraphic = new Graphic({
+    geometry: { type: "point", x, y },
+    symbol: {
+      type: "web-style",
+      name: "house",
+      styleName: "Esri2DPointSymbolsStyle",
+    },
+  });
+  graphicsLayer.add(pointGraphic);
+  view.goTo(pointGraphic);
+}
+
 
 function createBuffer (point) {
-  const distance = slider.value;
+  const distance = document.getElementById("distance-slider").value;
 
   return geometryEngine.geodesicBuffer(
     point.geometry,
@@ -139,15 +158,17 @@ function createBuffer (point) {
 }
 
 function filterByLocation (geometry) {
+  if (!csaPickupsLayer) {
+    return;
+  }
   const featureFilter = {
     geometry,
     spatialRelationship: "intersects",
     units: "miles"
   };
-  if (csaPickupsLayerView) {
-    csaPickupsLayerView.featureEffect = {
-      filter: featureFilter,
-      excludedEffect: "grayscale(100%) opacity(30%)"
-    }
-  }  
+
+  csaPickupsLayerView.featureEffect = {
+    filter: featureFilter,
+    excludedEffect: "grayscale(100%) opacity(60%)"
+  }
 }
