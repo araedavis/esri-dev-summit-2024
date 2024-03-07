@@ -13,19 +13,28 @@ defineCustomElements(window, {
   resourcesUrl: "https://js.arcgis.com/calcite-components/2.6.0/assets",
 });
 
-const EMOJI = {
-  vegetables: "&#129365;",
-  fruit: "&#127817;",
-  berries: "&#127827;",
-  mushrooms: "&#127812;",
-  eggs: "&#129370;",
-  dairy: "&#129371;",
-  meat: "&#129385;",
-  fish: "&#128031;",
-  honey: "&#127855;",
-  herbs: "&#127807;",
-  flowers: "&#127803;",
-  plant_starts: "&#127793;",
+const CATEGORY_MAP = {
+  vegetables: {
+    products: ["winter vegetables", "vegggies", "organic vegetables"],
+    emoji: "🥕",
+  },
+  fruit: { products: ["tree fruit"], emoji: "🍉" },
+  berries: { products: [], emoji: "🫐" },
+  mushrooms: { products: [], emoji: "🍄" },
+  eggs: { products: [], emoji: "🥚" },
+  dairy: { products: ["raw milk", "milk"], emoji: "🥛" },
+  meat: { products: [], emoji: "🥩" },
+  fish: {
+    products: ["fish (tuna)", "fish (salmon)", "wild sockeye salmon"],
+    emoji: "🐟",
+  },
+  honey: { products: [], emoji: "🐝" },
+  herbs: { products: [], emoji: "🪴" },
+  flowers: { products: [], emoji: "🌻" },
+  plant_starts: { products: ["plant starts", "plants"], emoji: "🌱" },
+  bread: { products: [], emoji: "🍞" },
+  chicken: { products: [], emoji: "🐓" },
+  pork: { products: [], emoji: "🐖" },
 };
 
 const container = document.querySelector(".card-container");
@@ -41,19 +50,38 @@ queryFeatures({ url: featureServiceUrl, where: "Status = 'Active'" })
     console.log(error);
   });
 
-// Remaps feature service attributes to simpler data object and converts products to array
+// Maps feature service attributes to simpler data object and converts products to array
 function normalizeSiteData(layer) {
   return layer.features.map((feature) => {
     return {
       farm: feature.attributes["Farm_Name"],
       description: feature.attributes["FarmDescript"],
       address: feature.attributes["Location"],
-      products: feature.attributes["Main_Products"].toLowerCase().split(", "),
+      products: categorizeProducts(feature.attributes["Main_Products"]),
       website: feature.attributes["Website"],
       email: feature.attributes["email"],
     };
   });
 }
+
+function categorizeProducts(productString) {
+  const categories = Object.keys(CATEGORY_MAP);
+  // Trim any leading or trailing white space and lowercase strings before splitting into an array
+  const remapped = productString.trim().toLowerCase().split(", ").map(product => {
+    if (categories.includes(product)) {
+      return product;
+    }
+    // Iterate through categories and their products to find the correct category
+    for (const category in CATEGORY_MAP) {
+      if (CATEGORY_MAP[category].products.includes(product)) {
+        return category; 
+      }
+    } 
+  });
+  // Return the grouped products but first filter out any undefined or duplicate values
+  return remapped.filter((category, index) => category && remapped.indexOf(category) === index);
+}
+
 
 // Attaches calcite-chip-group custom event
 function filterResults(sites) {
@@ -103,8 +131,7 @@ function displayCard(site) {
 
 function getChips(products) {
   const chips = products.map((product) => {
-    const productId = product.replace(" ", "_");
-    const content = EMOJI[productId];
+    const content = CATEGORY_MAP[product].emoji;
     return content ? `<li>${content}</li>` : "";
   });
   return chips.join("");
