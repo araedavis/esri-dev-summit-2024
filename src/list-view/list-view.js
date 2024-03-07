@@ -34,10 +34,10 @@ const featureServiceUrl =
   "https://www.portlandmaps.com/od/rest/services/COP_OpenData_ImportantPlaces/MapServer/188";
 
 queryFeatures({ url: featureServiceUrl, where: "Status = 'Active'" })
-  .then(layer => normalizeSiteData(layer))
-  .then(data => displayAllCards(data))
-  .then(data => filterResults(data))
-  .catch(error => {
+  .then((layer) => normalizeSiteData(layer))
+  .then((data) => displayAllCards(data))
+  .then((data) => filterResults(data))
+  .catch((error) => {
     console.log(error);
   });
 
@@ -62,9 +62,9 @@ function filterResults(sites) {
     const filters = e.target.selectedItems.map((selected) => selected.value);
 
     // Loop through sites in order to determine which site's products match the chip-group values
-    sites.forEach(site => {
+    sites.forEach((site) => {
       const isMatch =
-        site.products.filter(product =>
+        site.products.filter((product) =>
           filters.includes(product.replace(" ", "_"))
         ).length === filters.length;
       if (isMatch) {
@@ -76,7 +76,7 @@ function filterResults(sites) {
 
 function displayAllCards(sites) {
   container.replaceChildren("");
-  sites.forEach(site => {
+  sites.forEach((site) => {
     displayCard(site);
   });
   return sites;
@@ -84,22 +84,20 @@ function displayAllCards(sites) {
 
 function displayCard(site) {
   const { farm, address, description, website, email, products } = site;
-  const card = `<calcite-card>
-  <span slot="heading">${farm}</span>
-  <span slot="description">${address}</span>
-  <p>${description}</p>
-  <calcite-button icon-end="launch" href=${
-    website
-  } target="_blank">Visit website</calcite-button>
-  <calcite-button icon-end="envelope" href="mailto:${
-    email
-  }">Contact us</calcite-button>
-  <div slot="footer-start"></div>
-  <div slot="footer-end">${getChips(products)}</div>
-</calcite-card>`;
-  const cardElement = document
-    .createRange()
-    .createContextualFragment(card);
+  const card = `<article class="farm">
+  <header>
+    <h6>${farm}</h6>
+    <p>${address}</p>
+  </header>
+  <ul class="products">${getChips(products)}</ul>
+  <p class="description">${description}</p>
+  <footer>
+    <a href=${website} target="_blank" label="Visit ${farm} website"><calcite-icon icon="web" scale="m" /></a>
+    <a href="mailto:${email}" label="Contact ${farm}"><calcite-icon icon="envelope" scale="m" /></a>
+  </footer>
+</article>
+`;
+  const cardElement = document.createRange().createContextualFragment(card);
   container.appendChild(cardElement);
 }
 
@@ -107,7 +105,7 @@ function getChips(products) {
   const chips = products.map((product) => {
     const productId = product.replace(" ", "_");
     const content = EMOJI[productId];
-    return content ? `<calcite-chip scale="s">${content}</calcite-chip>` : "";
+    return content ? `<li>${content}</li>` : "";
   });
   return chips.join("");
 }
