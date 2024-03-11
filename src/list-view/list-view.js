@@ -42,7 +42,7 @@ const container = document.querySelector(".card-container");
 const featureServiceUrl =
   "https://www.portlandmaps.com/od/rest/services/COP_OpenData_ImportantPlaces/MapServer/188";
 
-queryFeatures({ url: featureServiceUrl, where: "Status = 'Active'", returnGeometry: falsequ })
+queryFeatures({ url: featureServiceUrl, where: "Status = 'Active'", returnGeometry: false })
   .then((layer) => normalizeSiteData(layer))
   .then((data) => displayAllCards(data))
   .then((data) => filterResults(data))
