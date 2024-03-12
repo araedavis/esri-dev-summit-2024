@@ -1,0 +1,181 @@
+{
+  "type": "CIMPointSymbol",
+  "symbolLayers": [
+    {
+      "type": "CIMVectorMarker",
+      "enable": true,
+      "anchorPointUnits": "Relative",
+      "dominantSizeAxis3D": "Z",
+      "size": 18,
+      "billboardMode3D": "FaceNearPlane",
+      "frame": {
+        "xmin": 0,
+        "ymin": 0,
+        "xmax": 21,
+        "ymax": 21
+      },
+      "markerGraphics": [
+        {
+          "type": "CIMMarkerGraphic",
+          "geometry": {
+            "rings": [
+              [
+                [5, 9],
+                [11, 9],
+                [11, 5],
+                [5, 5],
+                [5, 9]
+              ],
+              [
+                [18, 4],
+                [18, 16.91],
+                [18, 16.91],
+                [17.88, 17.15],
+                [17.73, 17.37],
+                [17.54, 17.56],
+                [17.33, 17.73],
+                [17.09, 17.85],
+                [16.83, 17.94],
+                [16.57, 17.99],
+                [16.3, 18],
+                [15.7, 18],
+                [15.17, 17.94],
+                [14.67, 17.73],
+                [14.27, 17.37],
+                [14, 16.91],
+                [14, 4],
+                [18, 4]
+              ],
+              [
+                [13, 4],
+                [13, 10.87],
+                [11.75, 14.4],
+                [8, 17],
+                [4.25, 14.4],
+                [3, 10.87],
+                [3, 4],
+                [13, 4]
+              ]
+            ]
+          },
+          "symbol": {
+            "type": "CIMPolygonSymbol",
+            "symbolLayers": [
+              {
+                "type": "CIMSolidFill",
+                "enable": true,
+                "color": [178, 13, 48, 255]
+              }
+            ],
+            "angleAlignment": "Map"
+          }
+        }
+      ],
+      "scaleSymbolsProportionally": true,
+      "respectFrame": true,
+      "clippingPath": {
+        "type": "CIMClippingPath",
+        "clippingType": "Intersect",
+        "path": {
+          "rings": [
+            [
+              [0, 0],
+              [21, 0],
+              [21, 21],
+              [0, 21],
+              [0, 0]
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "type": "CIMVectorMarker",
+      "enable": true,
+      "anchorPoint": {
+        "x": 0,
+        "y": 0
+      },
+      "anchorPointUnits": "Relative",
+      "dominantSizeAxis3D": "Y",
+      "size": 19,
+      "billboardMode3D": "FaceNearPlane",
+      "frame": {
+        "xmin": 0,
+        "ymin": 0,
+        "xmax": 17,
+        "ymax": 17
+      },
+      "markerGraphics": [
+        {
+          "type": "CIMMarkerGraphic",
+          "geometry": {
+            "rings": [
+              [
+                [8.5, 0],
+                [7.02, 0.13],
+                [5.59, 0.51],
+                [4.25, 1.14],
+                [3.04, 1.99],
+                [1.99, 3.04],
+                [1.14, 4.25],
+                [0.51, 5.59],
+                [0.13, 7.02],
+                [0, 8.5],
+                [0.13, 9.98],
+                [0.51, 11.41],
+                [1.14, 12.75],
+                [1.99, 13.96],
+                [3.04, 15.01],
+                [4.25, 15.86],
+                [5.59, 16.49],
+                [7.02, 16.87],
+                [8.5, 17],
+                [9.98, 16.87],
+                [11.41, 16.49],
+                [12.75, 15.86],
+                [13.96, 15.01],
+                [15.01, 13.96],
+                [15.86, 12.75],
+                [16.49, 11.41],
+                [16.87, 9.98],
+                [17, 8.5],
+                [16.87, 7.02],
+                [16.49, 5.59],
+                [15.86, 4.25],
+                [15.01, 3.04],
+                [13.96, 1.99],
+                [12.75, 1.14],
+                [11.41, 0.51],
+                [9.98, 0.13],
+                [8.5, 0]
+              ]
+            ]
+          },
+          "symbol": {
+            "type": "CIMPolygonSymbol",
+            "symbolLayers": [
+              {
+                "type": "CIMSolidStroke",
+                "enable": true,
+                "capStyle": "Round",
+                "joinStyle": "Round",
+                "lineStyle3D": "Strip",
+                "miterLimit": 10,
+                "width": 0.5,
+                "color": [178, 13, 48, 255]
+              },
+              {
+                "type": "CIMSolidFill",
+                "enable": true,
+                "color": [255, 255, 255, 255]
+              }
+            ]
+          }
+        }
+      ],
+      "scaleSymbolsProportionally": true,
+      "respectFrame": true
+    }
+  ]
+}

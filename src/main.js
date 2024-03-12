@@ -18,8 +18,8 @@ import { addressToLocations } from "@arcgis/core/rest/locator";
 import Graphic from "@arcgis/core/Graphic";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import * as geometryEngine from "@arcgis/core/geometry/geometryEngine";
-import * as agricultureCIMSymbol from "./agriculture-cim-symbol.json";
-import * as plantCIMSymbol from "./plant-cim-symbol.json";
+import * as farmBuildingCIMSymbol from "./farm-building-cim-symbol.json";
+import * as homeCIMSymbol from "./home-cim-symbol.json";
 
   
 // Load calcite components
@@ -42,7 +42,7 @@ const view = new MapView({
   center: [-122.676483, 45.523],
   zoom: 12,
   highlightOptions: {
-    color: "#36DA43",
+    color: "#B20D30",
     haloOpacity: 0.75,
   },
   popup: {
@@ -63,7 +63,7 @@ const csaRenderer = {
     type: "cim",
     data: {
       type: "CIMSymbolReference",
-      symbol: plantCIMSymbol
+      symbol: farmBuildingCIMSymbol
     },
   },
 };
@@ -137,10 +137,12 @@ function addHomeGraphic (location) {
   pointGraphic = new Graphic({
     geometry: { type: "point", x, y },
     symbol: {
-      type: "web-style",
-      name: "house",
-      styleName: "Esri2DPointSymbolsStyle",
-    },
+      type: "cim",
+      data: {
+        type: "CIMSymbolReference",
+        symbol: homeCIMSymbol,
+      },
+    }
   });
   graphicsLayer.add(pointGraphic);
   view.goTo(pointGraphic);
@@ -169,6 +171,6 @@ function filterByLocation (geometry) {
 
   csaPickupsLayerView.featureEffect = {
     filter: featureFilter,
-    excludedEffect: "grayscale(100%) opacity(60%)"
+    excludedEffect: "grayscale(100%) opacity(40%)"
   }
 }

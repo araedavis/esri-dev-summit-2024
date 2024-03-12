@@ -40,6 +40,7 @@ A collection of doc, links, and resources to learn more about topics covered in 
 - [Portland Open Data portal](https://gis-pdx.opendata.arcgis.com/)
 - [Vite](https://vitejs.dev/)
 - [Calcite point symbols](https://github.com/Esri/calcite-point-symbols)
+- [Symbol Builder app](https://sagewall.github.io/symbol-builder/)
 - [CIM Symbol Builder blog post](https://www.esri.com/arcgis-blog/products/js-api-arcgis/developers/cim-symbol-builder/)
 - [JavaScript Maps SDK locator: addressToLocations](https://developers.arcgis.com/javascript/latest/api-reference/esri-rest-locator.html#addressToLocations)
 - [JavaScript Maps SDK featureEffect](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-FeatureEffect.html)
