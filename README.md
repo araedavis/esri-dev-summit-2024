@@ -7,3 +7,5 @@ To run demo app:
 npm install
 npm run dev
 ```
+
+[Resource list](https://github.com/araedavis/esri-dev-summit-2024/blob/main/resources.md)
