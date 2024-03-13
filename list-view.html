@@ -7,81 +7,95 @@
     <link rel="stylesheet" href="src/main.css" />
   </head>
 
-  <body class="list-view">
+  <body class="list-view calcite-mode-auto">
     <h1>Portland Metro CSA pick-up sites</h1>
-
     <div class="filter-container">
       <calcite-chip-group
         placeholder="Select a product"
         selection-mode="multiple"
         scale="l"
       >
-        <calcite-chip value="vegetables">🥕 vegetables</calcite-chip>
-        <calcite-chip value="fruit">🍉 fruit</calcite-chip>
-        <calcite-chip value="berries">🫐 berries</calcite-chip>
-        <calcite-chip value="mushrooms">🍄 mushrooms</calcite-chip>
-        <calcite-chip value="eggs">🥚 eggs</calcite-chip>
-        <calcite-chip value="dairy">🥛 dairy</calcite-chip>
-        <calcite-chip value="meat">🥩 meat</calcite-chip>
-        <calcite-chip value="chicken">🐓 chicken</calcite-chip>
-        <calcite-chip value="pork">🐖 pork</calcite-chip>
-        <calcite-chip value="fish">🐟 fish</calcite-chip>
-        <calcite-chip value="honey">🐝 honey</calcite-chip>
-        <calcite-chip value="herbs">🪴 herbs</calcite-chip>
-        <calcite-chip value="flowers">🌻 flowers</calcite-chip>
-        <calcite-chip value="plant_starts">🌱 plant starts</calcite-chip>
-      </calcite-chip-group>
-      <!--
-      <calcite-combobox placeholder="Select a product">
-        <calcite-combobox-item
+        <calcite-chip
+          scale="l"
+          kind="neutral"
           value="vegetables"
-          text-label="&#129365; vegetables"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="fruit"
-          text-label="&#127817; fruit"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="berries"
-          text-label="&#127827; berries"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
+          id="vegetables_chip"
+          >🥕</calcite-chip
+        >
+        <calcite-tooltip reference-element="vegetables_chip"
+          >vegetables</calcite-tooltip
+        >
+        <calcite-chip scale="l" kind="neutral" value="fruit" id="fruit_chip"
+          >🍉</calcite-chip
+        >
+        <calcite-tooltip reference-element="fruit_chip">fruit</calcite-tooltip>
+        <calcite-chip scale="l" kind="neutral" value="berries" id="berries_chip"
+          >🫐</calcite-chip
+        >
+        <calcite-tooltip reference-element="berries_chip"
+          >berries</calcite-tooltip
+        >
+        <calcite-chip
+          scale="l"
+          kind="neutral"
           value="mushrooms"
-          text-label="&#127812; mushrooms"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="eggs"
-          text-label="&#129370; eggs"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="dairy"
-          text-label="&#129371; dairy"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="meat"
-          text-label="&#129385; meat"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="fish"
-          text-label="&#128031; fish"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="honey"
-          text-label="&#127855; honey"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="herbs"
-          text-label="&#127807;herbs"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
-          value="flowers"
-          text-label="&#127803; flowers"
-        ></calcite-combobox-item>
-        <calcite-combobox-item
+          id="mushrooms_chip"
+          >🍄</calcite-chip
+        >
+        <calcite-tooltip reference-element="mushrooms_chip"
+          >mushrooms</calcite-tooltip
+        >
+        <calcite-chip scale="l" kind="neutral" value="eggs" id="eggs_chip"
+          >🥚</calcite-chip
+        >
+        <calcite-tooltip reference-element="eggs_chip">eggs</calcite-tooltip>
+        <calcite-chip scale="l" kind="neutral" value="dairy" id="dairy_chip"
+          >🥛</calcite-chip
+        >
+        <calcite-tooltip reference-element="dairy_chip">dairy</calcite-tooltip>
+        <calcite-chip scale="l" kind="neutral" value="meat" id="meat_chip"
+          >🥩</calcite-chip
+        >
+        <calcite-tooltip reference-element="meat_chip">meat</calcite-tooltip>
+        <calcite-chip scale="l" kind="neutral" value="chicken" id="chicken_chip"
+          >🐓</calcite-chip
+        >
+        <calcite-tooltip reference-element="chicken_chip"
+          >chicken</calcite-tooltip
+        >
+        <calcite-chip scale="l" kind="neutral" value="pork" id="pork_chip"
+          >🐖</calcite-chip
+        >
+        <calcite-tooltip reference-element="pork_chip">pork</calcite-tooltip>
+        <calcite-chip scale="l" kind="neutral" value="fish" id="fish_chip"
+          >🐟</calcite-chip
+        >
+        <calcite-tooltip reference-element="fish_chip">fish</calcite-tooltip>
+        <calcite-chip scale="l" kind="neutral" value="honey" id="honey_chip"
+          >🐝</calcite-chip
+        >
+        <calcite-tooltip reference-element="honey_chip">honey</calcite-tooltip>
+        <calcite-chip scale="l" kind="neutral" value="herbs" id="herbs_chip"
+          >🪴</calcite-chip
+        >
+        <calcite-tooltip reference-element="herbs_chip">herbs</calcite-tooltip>
+        <calcite-chip scale="l" kind="neutral" value="flowers" id="flowers_chip"
+          >🌻</calcite-chip
+        >
+        <calcite-tooltip reference-element="flowers_chip"
+          >flowers</calcite-tooltip
+        >
+        <calcite-chip
+          scale="l"
+          kind="neutral"
           value="plant_starts"
-          text-label="&#127793; plant starts"
-        ></calcite-combobox-item>
-      </calcite-combobox>-->
+          id="plant_starts_chip"
+          >🌱</calcite-chip
+        >
+        <calcite-tooltip reference-element="plant_starts_chip"
+          >plant starts</calcite-tooltip
+        >
+      </calcite-chip-group>
     </div>
 
     <div class="card-container"></div>

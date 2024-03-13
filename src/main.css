@@ -23,7 +23,6 @@ body,
 }
 
 body {
-  /* font-size: clamp(1rem, 1vw + 1rem, 2rem); */
   line-height: 1.5;
 }
 
@@ -38,19 +37,67 @@ video {
   padding: 0px 10px;
 }
 
+/* List View Styles */
 .list-view {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto 1fr;
-  gap: min(2vw, 2rem) min(2vh, 2rem);
-  height: 100dvh;
-  padding: min(4vw, 2rem) min(4vh, 2rem);
+  grid-template-rows: auto 1fr auto;
+  height: auto;
+
+  @media (min-width: 768px) {
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: auto 1fr;
+    gap-y: min(2vh, 2rem);
+  }
 
   h1 {
-    font-size: inherit;
     margin: 0;
+    padding: min(2vh, 2rem) min(4vw, 4rem);
+
+    background-color: var(--calcite-color-foreground-3);
+    color: var(--calcite-color-text-1);
+
+    font-size: var(--calcite-font-size-2);
+
+    @media (min-width: 768px) {
+      grid-column: 1 / span 2;
+
+      padding-inline: min(2vw, 2rem);
+
+      background-color: transparent;
+    }
   }
 }
+
+.filter-container {
+  --calcite-font-size-0: var(--calcite-font-size-2);
+  --calcite-color-foreground-2: honeydew;
+
+  @media (prefers-color-scheme: dark) {
+    --calcite-color-foreground-2: darkslategray;
+  }
+
+  grid-row-end: 4;
+
+  position: sticky;
+  bottom: 0;
+  padding: min(2vh, 2rem) min(2vw, 2rem);
+
+  background-color: var(--calcite-color-foreground-3);
+  box-shadow: var(--calcite-shadow-md);
+
+  @media (min-width: 768px) {
+    --calcite-font-size-0: var(--calcite-font-size-3);
+
+    grid-row-end: auto;
+
+    top: 0;
+    bottom: auto;
+    max-height: 100dvh;
+    padding: min(2vh, 2rem) min(1vw, 1rem);
+  }
+}
+
 .card-container {
   display: grid;
   grid-template-columns: repeat(
@@ -58,33 +105,40 @@ video {
     minmax(max(300px, calc(25% - min(2vw, 2rem))), 1fr)
   );
   grid-auto-rows: max-content;
-  grid-row-end: 4;
-  gap: min(2vw, 2rem) min(2vh, 2rem);
-  max-height: 100%;
-  overflow: auto;
-  scrollbar-gutter: stable;
+  grid-row-end: 3;
+  gap: min(2vh, 2rem) min(2vw, 2rem);
+  padding: min(4vh, 2rem) min(4vw, 2rem);
+
+  @media (min-width: 768px) {
+    grid-row-end: auto;
+  }
 }
 
 .farm {
   display: grid;
   grid-template-columns: 1fr minmax(0, max-content);
   grid-template-rows: auto 1fr auto;
-  gap: min(1vw, 1rem) min(1vh, 1rem);
+  gap: min(1vh, 1rem) min(1vw, 1rem);
 
   background-color: var(--calcite-color-foreground-1);
   color: var(--calcite-color-text-3);
+
   border: 1px solid var(--calcite-color-border-1);
   border-radius: var(--calcite-corner-radius);
+
   box-shadow: var(--calcite-shadow-sm);
 
   header {
+    padding: min(1vh, 1rem) min(2vw, 2rem) 0;
+
     font-size: 115%;
-    padding: min(1vh, 1rem) min(1vw, 1rem) 0;
   }
 
   h6 {
-    font-size: 125%;
     margin: 0;
+
+    font-size: 125%;
+
     color: var(--calcite-color-text-2);
   }
 
@@ -93,7 +147,7 @@ video {
   }
 
   .description {
-    padding: 0 min(1vw, 1rem);
+    padding: 0 min(2vw, 2rem);
   }
 
   .products {
@@ -103,19 +157,16 @@ video {
     grid-template-columns: 1fr;
     grid-auto-flow: row;
     grid-auto-rows: min-content;
-    gap: min(0.5vw, 0.5rem) min(0.5vh, 0.5rem);
+    gap: min(0.5vh, 0.5rem) min(0.5vw, 0.5rem);
+
+    margin: 0;
+    padding: min(1vh, 1rem) min(1vw, 1rem);
 
     background-color: var(--calcite-color-foreground-2);
 
-    margin: 0;
-    padding: min(0.5vh, 0.5rem) min(0.5vw, 0.5rem);
     list-style: none;
 
     border-left: 1px solid var(--calcite-color-border-2);
-
-    &:empty {
-      /* display: none; */
-    }
 
     li {
       font-size: 1.5rem;
